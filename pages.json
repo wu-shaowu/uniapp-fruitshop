@@ -1,0 +1,80 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/navigation/navigation",
+			"style": {
+        "navigationBarTitleText": "uni-app",
+        				"enablePullDownRefresh": true
+      }
+		},
+		{
+			"path": "pages/index/index",
+			"style": {}
+		},
+		{
+			"path": "pages/index/shopping-infor",
+			"style": {}
+		}
+		
+	    ,{
+            "path" : "pages/car/car",
+            "style" : {}
+        }
+		,{
+		    "path" : "pages/car/order",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/car/pay-result",
+		    "style" : {}
+		}
+		
+		
+        ,{
+            "path" : "pages/user/user",
+            "style" : {}
+        }
+		,{
+		    "path" : "pages/user/my-address",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/user/add-address",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/user/all-order",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/user/state-order",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/user/refund",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/user/my-money",
+		    "style" : {}
+		}
+		,{
+		    "path" : "pages/user/my-coupon",
+		    "style" : {}
+		}
+		
+		
+		
+        ,{
+            "path" : "pages/none/none",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	}
+}
