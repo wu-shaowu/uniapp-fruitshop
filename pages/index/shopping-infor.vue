@@ -184,7 +184,6 @@
 		},
     computed:{
       detailGoodInfo(){
-        console.log(this.$store.state.goods.detailGoodInfo)
         return this.$store.state.goods.detailGoodInfo
       }
     }

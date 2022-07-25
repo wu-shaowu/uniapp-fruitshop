@@ -8,7 +8,7 @@
 			<view class="user-header" style="width: 100%;">
 				<view class="flex align-center padding">
 					<view class="cu-avatar round xl" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);border:2px solid white"></view>
-					<view class="text-white padding-left-sm">雷神索尔</view>
+					<view class="text-white padding-left-sm">1054948087</view>
 				</view>
 				<view class="grid col-3 text-center" style="width: 100%;padding: 0 30upx;">
 					<view class="text-white" @click="gotoCoupon">

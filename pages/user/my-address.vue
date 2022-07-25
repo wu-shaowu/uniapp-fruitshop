@@ -12,11 +12,11 @@
 							<view class="padding-left-sm">
 								<image src="../../static/car/home.png" mode="" style="width: 60upx;height: 30upx;"></image>
 								<image src="../../static/car/moren.png" mode="" style="width: 60upx;height: 30upx;margin-left: 10upx;"></image>
-								<text class="margin-left-sm" style="font-weight: 600;font-size: 14px;">毛毛福</text>
-								<text class="margin-left-xs" style="font-weight: 600;font-size: 14px;">13971884962</text>
+								<text class="margin-left-sm" style="font-weight: 600;font-size: 14px;">吴少武</text>
+								<text class="margin-left-xs" style="font-weight: 600;font-size: 14px;">15011966300</text>
 							</view>
 							<view class="padding-left-sm">
-								<text class="cuIcon-locationfill text-blue" style="font-size: 14px;"></text><text style="margin-left: 10upx;">湖北省黄石市下陆区湖北理工学院</text>
+								<text class="cuIcon-locationfill text-blue" style="font-size: 14px;"></text><text style="margin-left: 10upx;">广东省江门市五邑大学</text>
 							</view>
 						</view>
 						<view class=" text-center" style="margin-top: 20upx;" @click="editUserAddress">

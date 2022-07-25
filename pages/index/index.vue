@@ -130,7 +130,7 @@
             </view>
 
             <view class="" style="margin-left: -30upx;">
-              <image src="../../static/index/submit.png" mode="" style="height: 100upx;width: 100%;" @tap="addcar"></image>
+              <image src="../../static/index/submit.png" mode="" style="height: 100upx;width: 100%;" @tap="addcar()"></image>
             </view>
 
           </view>
@@ -144,6 +144,7 @@
 </template>
 
 <script>
+  import {addCars} from '@/api/index.js'
   export default {
     data() {
       return {
@@ -280,8 +281,25 @@
       countAdd() {
         this.shopNumber += 1
       },
-      addcar(){
-        console.log(123456789)
+      async addcar(){
+                  // console.log(this.detailInfo.isCheap);
+                  // console.log(this.btnGood)
+              const data = {
+                usersId: "62b178b0e3f366b069b4a39a",
+                images: this.btnGood.images,
+                name: this.btnGood.name,
+                weight: this.btnGood.weight,
+                number: this.shopNumber,
+                unitPrice: this.btnGood.price,
+                isCheap:this.btnGood.isCheap,
+                price: Math.floor(this.shopNumber * 1 * (this.btnGood.price * 1)*100)/100,
+                isTrade:false,
+              };
+              // console.log(data);
+              const result = await addCars(data);
+              this.buyModel = false
+              console.log(result)
+        // console.log(123456789)
       }
 
 

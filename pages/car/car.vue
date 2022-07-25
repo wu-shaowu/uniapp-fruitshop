@@ -13,12 +13,12 @@
     </view>
 
     <view class="car-body bg-white">
-      <view class="flex solid-bottom"  style="padding: 30upx 0;" v-for="(item,index) in usersCars" :key="index">
+      <view class="flex solid-bottom" style="padding: 30upx 0;" v-for="(item,index) in usersCars" :key="index">
         <view class="text-center padding-sm" style="font-size: 18px;margin-top: 30upx;">
           <image src="../../static/car/weixuanzhong.png" mode="" style="height: 30upx;width: 30upx;"></image>
         </view>
         <view class="">
-          <image class="shoping-img" :src="item.images" mode="aspectFill" ></image>
+          <image class="shoping-img" :src="item.images" mode="aspectFill"></image>
         </view>
         <view class="" style="padding-left: 30upx;">
           <view class="" @click="gotoShopInfor">
@@ -37,14 +37,18 @@
 
           <view class="flex justify-between">
             <view class="">
-              <text class="text-red" style="font-weight: 500;font-size: 14px;color: rbg(238,54,85);">￥{{item.price}}</text>
+              <text class="text-red"
+                style="font-weight: 500;font-size: 14px;color: rbg(238,54,85);">￥{{item.price}}</text>
               <text class="text-gray padding-left-sm" style="text-decoration:line-through">￥32.9</text>
             </view>
             <view class="StepAdder">
-              <image src="../../static/car/jian.png" mode="" style="width: 40upx;height: 40upx;margin-top: 10upx;" @click="reduce(item)">
+              <image src="../../static/car/jian.png" mode="" style="width: 40upx;height: 40upx;margin-top: 10upx;"
+                @click="reduce(item)">
               </image>
-              <text style="margin: 0 20upx;font-size: 14px;height: 40upx;font-size: 40upx;font-weight: 400;">{{item.number}}</text>
-              <image src="../../static/car/jia.png" mode="" style="width: 40upx;height: 40upx;" @click="item.number++"></image>
+              <text
+                style="margin: 0 20upx;font-size: 14px;height: 40upx;font-size: 40upx;font-weight: 400;">{{item.number}}</text>
+              <image src="../../static/car/jia.png" mode="" style="width: 40upx;height: 40upx;" @click="item.number++">
+              </image>
               <view class="delete" @click="deletecar(item._id)">删除</view>
             </view>
           </view>
@@ -65,7 +69,7 @@
         <view class="flex">
           <view class="text-right margin-right-sm" style="padding: 5upx 0;">
             <view class="">
-              合计：<text class="text-red" style="font-size: 14px;font-weight: 600;">￥205.90</text>
+              合计：<text class="text-red" style="font-size: 14px;font-weight: 600;">￥{{totalPrice}}</text>
             </view>
             <view class="">
               <text class="text-gray">已优惠：￥5</text>
@@ -84,7 +88,9 @@
 </template>
 
 <script>
-  import {deleteCars} from '@/api/index.js'
+  import {
+    deleteCars
+  } from '@/api/index.js'
   export default {
     data() {
       return {
@@ -106,21 +112,35 @@
           url: '../index/shopping-infor'
         })
       },
-      reduce(item){
-        if(item.number>1){
+      reduce(item) {
+        if (item.number > 1) {
           item.number--;
         }
       },
-     async deletecar(id){
-        const data = {_id:id};
+      async deletecar(id) {
+        const data = {
+          _id: id
+        };
         const result = await deleteCars(data);
+        uni.reLaunch({
+          url:'../navigation/navigation'
+        })
         console.log(result);
       }
     },
-    computed:{
-         usersCars() {
-            return this.$store.state.cars.usersCars;
-          }
+    computed: {
+      usersCars() {
+        return this.$store.state.cars.usersCars;
+      },
+       //总价
+          totalPrice() {
+            let a = 0;
+      
+            this.usersCars.forEach((element) => {
+              a = element.price * 1 + a;
+            });
+            return Math.floor(a * 100) / 100;
+          },
     }
   }
 </script>
@@ -155,12 +175,14 @@
     border-radius: 30upx;
     margin: 0 10upx;
   }
-  .StepAdder{
-   position: absolute;
-   top: 70rpx;
-   right:30rpx;
-   
+
+  .StepAdder {
+    position: absolute;
+    top: 70rpx;
+    right: 30rpx;
+
   }
+
   .delete {
     position: absolute;
     bottom: -70upx;
