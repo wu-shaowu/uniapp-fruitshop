@@ -65,9 +65,15 @@
 		
 		
 		
+      
         ,{
-            "path" : "pages/none/none",
-            "style" : {}
+            "path" : "pages/user/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {

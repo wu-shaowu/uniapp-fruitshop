@@ -25,13 +25,18 @@
         <view class="cu-bar bg-white justify-end">
           <view class="content">请登录</view>
         </view>
-        <view class="padding-xl">
-          登录会获取您的头像和用户名
+        <view>
+  <!--        <view class="login">账号<input v-model="phone" class="loginput" /></view>
+          <view class="login">密码<input v-model="password" class="loginput" /></view> -->
         </view>
         <view class="padding flex flex-direction solid-bottom">
           <button class='cu-btn bg-blue margin-tb-sm lg' open-type="getUserInfo" withCredentials="true" lang="zh_CN"
-            @getuserinfo="userRegister" :disabled="loginGoTo">
-            授权并登录
+            @click="loguser">
+            登录
+          </button>
+          <button class='cu-btn bg-blue margin-tb-sm lg' open-type="getUserInfo" withCredentials="true" lang="zh_CN"
+            @click="loginModel=false">
+            暂不登录
           </button>
         </view>
       </view>
@@ -51,6 +56,9 @@
 </template>
 
 <script>
+  import {
+    login
+  } from '../../api/index.js'
   export default {
     data() {
       return {
@@ -61,7 +69,7 @@
         showModal: "123456",
         // 默认身份是游客[{"key":"0"},{"data":"["openid"]"}]）
         identity: [],
-        loginModel: false,
+        loginModel: true,
 
         // 用户注册有关
         nickName: "",
@@ -71,21 +79,36 @@
           pageNo: 1,
           pageSize: 10,
         },
-
+        phone: "",
+        password: ""
       }
     },
     onShow() {
       this.shareApp();
-      // console.log("123");
+     console.log("触发onload")
+     if(this.$store.state.users.usersInfo.name){
+           this.loginModel = false;}
     },
-    onReachBottom(){
+    onReachBottom() {
       this.searchInfo.pageNo++;
-           
+
       this.$store.dispatch("searchGoods", this.searchInfo);
-    		console.log('已触底');
-        },
-   
+      console.log('已触底');
+    },
+
     methods: {
+      async loguser() {
+        uni.navigateTo({
+          url:'../user/login/login'
+        })
+        // const data = {
+        //   phone: this.phone,
+        //   password: this.password
+        // }
+
+        // const result = await login(data);
+        
+      },
       shareApp() {
         wx.showShareMenu({
           withShareTicket: true
@@ -99,99 +122,9 @@
 
 
       // 获取用户code，判断用户是否注册过
-      login() {
-        let _this = this;
 
-        //1.wx获取登录用户code
-        uni.login({
-          provider: 'weixin',
-          success: function(loginRes) {
-            let code = loginRes.code;
-
-            //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-            uni.request({
-              url: 'https://www.ckcoffee.club/login/',
-              data: {
-                code: code,
-              },
-              method: 'GET',
-              success: (res) => {
-                // console.log(res.data);
-
-                if (res.data.state == 1001) {
-                  console.log("未注册的用户！")
-                  // 未注册的用户，强制用户注册
-                  _this.loginModel = true;
-                  _this.OpenId = res.data.openid;
-
-                }
-                if (res.data.state == 1002) {
-                  console.log("游客用户")
-                  _this.OpenId = res.data.openid
-                  _this.getClientInfor()
-
-                }
-                if (res.data.state == 1003) {
-                  console.log("经纪人用户")
-                  _this.OpenId = res.data.openid
-                  _this.getBrokerInfor()
-
-                }
-                _this.loading = false;
-
-                // 身份验证成功之后再开始渲染index页面。之后给index页面传递参数
-
-              },
-              fail(res) {
-                // 第一次发送失败，再来一次！
-                _this.login();
-              }
-            });
-          },
-        });
-      },
       // 用户注册
-      userRegister() {
-        let _this = this;
-        uni.getUserInfo({
-          provider: 'weixin',
-          success: function(infoRes) {
-            _this.nickName = infoRes.userInfo.nickName; //昵称
-            _this.avatarUrl = infoRes.userInfo.avatarUrl; //头像
 
-            // 用户首次注册
-            uni.request({
-              url: 'https://www.ckcoffee.club/client/',
-              data: {
-                openid: _this.OpenId,
-                username: _this.nickName,
-                head_img: _this.avatarUrl
-              },
-              method: 'POST',
-              header: {
-                'content-type': 'application/json'
-              },
-              success: (res) => {
-                // console.log(res.data)
-                _this.OpenId = res.data.openid
-                _this.getClientInfor()
-
-                _this.loginModel = false
-
-
-              },
-              fail() {
-                console.log("出错了！")
-              }
-            });
-            _this.loading = false;
-
-          },
-          fail(res) {
-            console.log(res)
-          }
-        });
-      },
       getClientInfor() {
         let _this = this
         uni.request({
@@ -256,37 +189,28 @@
 
       }
 
-
-
-
-
-
     },
-    onLoad() {
-      // wx.checkSession({
-      // 	success: function(){
-      // 		//session_key 未过期，并且在本生命周期一直有效
-      // 		console.log("未过期")
-      // 	},
-      // 	fail: function(){
-      // 		// session_key 已经失效，需要重新执行登录流程
-      // 		console.log("已经过期") 
-      // 		// wx.login() //重新登录
-      // 	}
-      // });
-      // // 登陆
-      // let _this = this
-      // 
-      // // setTimeout(function() {
-      // // 	_this.login();
-      // // }, 3000);
-      // 
-      // _this.login();
+    computed: {
+      usersInfo() {
+        return this.$store.state.users.usersInfo;
+      }
+    },
 
-    }
+      
+    
+
   }
 </script>
 
 <style>
+  .login {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px;
+  }
 
+  .loginput {
+
+    border: 1px solid black;
+  }
 </style>

@@ -4,7 +4,8 @@ import {
     recharge
 } from '@/api/index.js'
 const state = {
-    usersInfo: {}
+    usersInfo: {},
+
 };
 const actions = {
     async login({
@@ -39,7 +40,11 @@ const actions = {
 };
 const mutations = {
     LOGIN(context, value) {
+        console.log("看这里")
+        console.log(value.data)
         state.usersInfo = value.data;
+        // console.log(state.usersInfo)
+        // console.log("上面")
     },
     CHECKID(context, value){
         state.usersInfo = value.data;

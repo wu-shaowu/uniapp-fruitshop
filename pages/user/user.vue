@@ -153,6 +153,9 @@
 				
 			}
 		},
+    created() {
+      console.log(123456)
+    },
 		methods: {
 			gotoAllOrder(){
 				uni.navigateTo({

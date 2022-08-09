@@ -2,11 +2,11 @@
   <view>
     <view class="fixed">
       <cu-custom :isBack="true" bgColor="text-white">
-        <block slot="content" style="font-size: 16px;font-weight: 800;">日鲜镖局</block>
+        <block slot="content" style="font-size: 16px;font-weight: 800;">水果配送</block>
       </cu-custom>
     </view>
-    <view class="">
-      <image src="../../static/index/index.png" mode="" style="height: 250upx;width: 100%;"></image>
+    <view class="top">
+ <!--    <image src="../../static/index/index.png" mode="" style="height: 250upx;width: 100%;"></image> -->
     </view>
     <view class="flex index-header">
       <view class="" style="width: 30%;">
@@ -320,6 +320,11 @@
     height: 0;
   }
 
+.top {
+  height: 100upx;
+  width: 100%;
+  background-color: 0677E8;
+}
 
   .index-image-header {
     padding: 10upx;
