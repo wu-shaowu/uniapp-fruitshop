@@ -4,8 +4,8 @@
         logo="/static/images/logo/logo_white.png"
         title="登录"
         :props="props"
-        :history="history"
-        :thirdProps="thirdProps"
+
+     
         wxProfile
         @login="handleLogin"
         @remove="remove"
@@ -34,25 +34,38 @@
        methods: {
            async handleLogin(form) {
                // 表单验证
-               const result = await login(form);
-               if (result.data.status == 1) {
-                 this.loginModel = false
-                 this.$store.commit("LOGIN", result.data)
-                 console.log(result.data)
-                 uni.navigateTo({
-                   url:'../../navigation/navigation?show=false'
-                 })
-               } else {
-                 alert("登录失败")
-               }
-                console.log(result)
+               console.log(form)
+               this.$store.dispatch("login",form)
+               // const result = await login(form);
+               // if (result.data.status == 1) {
+               //   this.loginModel = false
+               //   this.$store.commit("LOGIN", result.data)       
+               //    uni.setStorage({
+               //      key:"id",
+               //      data:result.data.data._id,
+               //      success(){
+               //        console.log("成功")
+               //      }
+               //    })
+               //    uni.getStorage({
+               //      key:"id",
+               //      success(res){
+               //        console.log(res)
+               //      }
+               //    })
+               //    uni.navigateTo({
+               //      url:'../../navigation/navigation?show=false'
+               //    })
+               // } else {
+               //   alert("登录失败")
+               // }
            },
            remove(item, index) {
                uni.showModal({
                    title: '提示',
                    content: `确定删除账号${item.loginName}？`,
                    success: (res) => {
-                       this.history.splice(index, 1);
+                       // this.history.splice(index, 1);
                    }
                });
            },

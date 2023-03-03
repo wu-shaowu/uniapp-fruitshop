@@ -14,8 +14,16 @@ const actions = {
         const result = await login(data)
         console.log(result);
         if (result.data.status == 1) {
-            localStorage.setItem('TOKEN',result.data.data._id);
-            localStorage.setItem('token',result.data.token);
+       uni.setStorage({
+         key:"id",
+         data:result.data.data._id,
+         success(){
+           console.log("�ɹ�")
+         }
+       })
+             uni.navigateTo({
+               url:'../../navigation/navigation?show=false'
+             })
             commit('LOGIN', result.data);
 
         }else{
@@ -40,11 +48,8 @@ const actions = {
 };
 const mutations = {
     LOGIN(context, value) {
-        console.log("看这里")
         console.log(value.data)
         state.usersInfo = value.data;
-        // console.log(state.usersInfo)
-        // console.log("上面")
     },
     CHECKID(context, value){
         state.usersInfo = value.data;

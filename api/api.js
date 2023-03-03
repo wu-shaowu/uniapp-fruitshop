@@ -1,5 +1,5 @@
 const api = (params) => {
-	let URL = "http://192.168.163.1:3000/" //域名
+	let URL = "http://192.168.0.108:3000/" //域名
 	return new Promise((resolve, reject) => {
 		uni.showLoading({
 			title: '加载中',

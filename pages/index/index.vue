@@ -2,7 +2,7 @@
   <view>
     <view class="fixed">
       <cu-custom :isBack="true" bgColor="text-white">
-        <block slot="content" style="font-size: 16px;font-weight: 800;">水果配送</block>
+        <block slot="content" style="font-size: 16px;font-weight: 800;">水果送</block>
       </cu-custom>
     </view>
     <view class="top">
@@ -36,27 +36,31 @@
           <image src="../../static/index/index-banner.png" mode=""
             style="width: 100%;height: 250upx;border-radius: 5px"></image>
         </view>
-
-        <view class="text-gray margin-top">
-          店长推荐
+        <view class="text-gray margin-top" >
+             <text style="margin-bottom: 10px;" @click="xsqb()">显示全部</text>
+          <view style="display: flex; justify-content: space-between;">
+            <input v-model="keyword" style="border: 1px solid #eee;"/>
+            <text @click="searchGoods">确定</text>
+           
+          </view>
+       
         </view>
-
         <view class="flex solid-bottom" v-for="(item, index) in goods" :key="index" style="padding: 30upx 0;">
           <view class="">
-            <image class="shoping-img" :src="item.images" mode="aspectFill"
-              style="border-radius:3px"></image>
+          <image class="shoping-img" :src="item.images" mode="aspectFill"
+              style="border-radius:3px"></image> 
           </view>
           <view class="" style="padding-left: 30upx;">
-            <view class="" @click="gotoShopInfor(item)">
+            <view class="" >
               <view class="shopping-title">
                {{item.name}}
               </view>
-              <view class="text-gray" style="font-size: 10px;">
+         <!--     <view class="text-gray" style="font-size: 10px;">
                 醉酒一号，一口甜在心！
-              </view>
+              </view> -->
               <view class="flex" style="margin-top: 10upx;">
                 <!-- <text class="cu-tag bg-yellow light sm padding-xs">满减</text> -->
-                <image src="../../static/index/manjian.png" mode="" style="width: 70upx;height: 30upx;"></image>
+                <image v-if="item.isCheap" src="../../static/index/manjian.png" mode="" style="width: 70upx;height: 30upx;"></image>
                 <text class="" style="font-size: 10px;margin-left: 30upx;color: rgb(255,146,99);">{{item.weight}}</text>
               </view>
             </view>
@@ -94,16 +98,16 @@
                   {{btnGood.name}}
                 </view>
                 <view class="text-gray padding-xs" style="font-size: 10px;">
-                  醉酒一号，一口甜在心！
+              <!--    醉酒一号，一口甜在心！ -->
                 </view>
                 <view class="flex" style="margin-top: 10upx;">
                   <image src="../../static/index/manjian.png" mode="" style="width: 70upx;height: 30upx;"></image>
-                  <text class="" style="font-size: 10px;margin-left: 30upx;color: rgb(255,146,99);">满188立减20</text>
+                  <text class="" style="font-size: 10px;margin-left: 30upx;color: rgb(255,146,99);">满200立减10</text>
                 </view>
                 <view class="text-gray text-sm flex justify-between">
                   <view class="">
                     <text class="text-red" style="font-weight: 500;font-size: 14px;color: rbg(238,54,85);">￥{{btnGood.price}}</text>
-                    <text class="text-gray padding-left-sm" style="text-decoration:line-through">￥{{btnGood.price-3}}</text>
+                    <text class="text-gray padding-left-sm" style="text-decoration:line-through">￥{{(btnGood.price*1) +1}}</text>
                   </view>
                 </view>
               </view>
@@ -148,22 +152,23 @@
   export default {
     data() {
       return {
+        keyword:'',
         list: [{
             'id': 1,
             'name': '店长推荐'
           },
-          {
-            'id': 2,
-            'name': '新品上市'
-          },
-          {
-            'id': 3,
-            'name': '国外狠货'
-          },
-          {
-            'id': 4,
-            'name': '休闲零食'
-          },
+          // {
+          //   'id': 2,
+          //   'name': '新品上市'
+          // },
+          // {
+          //   'id': 3,
+          //   'name': '国外狠货'
+          // },
+          // {
+          //   'id': 4,
+          //   'name': '休闲零食'
+          // },
         ],
         tabCur: 0,
         mainCur: 0,
@@ -195,7 +200,7 @@
         searchInfo: {
           name: "",
           pageNo: 1,
-          pageSize: 10,
+          pageSize: 20,
         },
         WindowsHight: this.WindowsHight,
         btnGood:{
@@ -214,25 +219,28 @@
         mask: true
       });
       this.getdata();
-
+      // this.$store.dispatch("searchGoods", this.searchInfo);
     },
     onReady() {
       uni.hideLoading()
     },
-    onReachBottom() {
-      // const data = {
-      //   name:'',
-      //   pageNo:1,
-      //   pageSize: this.pageSize
-      // };
-      this.searchInfo.pageNo++;
-     
-      this.$store.dispatch("searchGoods", this.searchInfo);
-      console.log("触底")
+ //    onReachBottom() {
+ //       // if(this.searchInfo.pageNo==2){
+ //       //   return
+ //       // }else{
+ //       //   this.searchInfo.pageNo++;
+              
+ //         this.$store.dispatch("searchGoods", this.searchInfo);
+       
+ 
     
-      // console.log(this.text);
-    },
+ //      // console.log(this.text);
+ //    },
     methods: {
+      xsqb(){
+        this.$store.commit('QKSZ')
+        this.getdata()
+      },
       getdata() {
         this.$store.dispatch("searchGoods", this.searchInfo);
            },
@@ -245,19 +253,11 @@
         this.shopNumber = 1
         this.btnGood = item;
         this.buyModel = true;
-        console.log("触发加号")
       },
       gotoShopInfor(item) {
-        // console.log("看这里")
-        // console.log(item);
-        	// this.$emit('acceptDataFromOpenerPage',item)       //第二步
           this.$store.commit("DETAILGOODINFO",item)
         uni.navigateTo({
           url: '../index/shopping-infor',
-          // success: function(res) {
-          //   // 通过eventChannel向被打开页面传送数据
-          //   res.eventChannel.emit('acceptDataFromOpenerPage', item)
-          // }
         })
       },
       closeModel() {
@@ -281,11 +281,16 @@
       countAdd() {
         this.shopNumber += 1
       },
+      searchGoods(){
+              const data = { name: this.keyword ,
+                                pageNo:1,
+                                pageSize:10};
+                                console.log(data)
+                                       this.$store.dispatch("searchGoodsByPassword", data);
+      },
       async addcar(){
-                  // console.log(this.detailInfo.isCheap);
-                  // console.log(this.btnGood)
               const data = {
-                usersId: "62b178b0e3f366b069b4a39a",
+                usersId: this.userInfo._id,
                 images: this.btnGood.images,
                 name: this.btnGood.name,
                 weight: this.btnGood.weight,
@@ -295,7 +300,7 @@
                 price: Math.floor(this.shopNumber * 1 * (this.btnGood.price * 1)*100)/100,
                 isTrade:false,
               };
-              // console.log(data);
+               console.log(data);
               const result = await addCars(data);
               this.buyModel = false
               console.log(result)
@@ -308,6 +313,9 @@
     computed: {
       goods() {
         return this.$store.state.goods.searchGoods;
+      },
+      userInfo(){
+        return this.$store.state.users.usersInfo;
       }
     }
   }

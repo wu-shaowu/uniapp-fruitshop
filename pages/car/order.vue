@@ -77,12 +77,12 @@
               <image src="../../static/car/home.png" mode="" style="width: 60upx;height: 30upx;"></image>
               <image src="../../static/car/moren.png" mode="" style="width: 60upx;height: 30upx;margin-left: 10upx;">
               </image>
-              <text class="margin-left-sm" style="font-weight: 600;font-size: 14px;">吴少武</text>
-              <text class="margin-left-xs" style="font-weight: 600;font-size: 14px;">15011966300</text>
+              <text class="margin-left-sm" style="font-weight: 600;font-size: 14px;">{{userInfo.name}}</text>
+              <text class="margin-left-xs" style="font-weight: 600;font-size: 14px;">{{userInfo.phone}}</text>
             </view>
             <view class="padding-left-sm">
               <text class="cuIcon-locationfill text-blue" style="font-size: 14px;"></text><text
-                style="margin-left: 10upx;">广东省江门市五邑大学</text>
+                style="margin-left: 10upx;">{{userInfo.daddress}}</text>
             </view>
           </view>
           <view class=" text-center">
@@ -147,12 +147,21 @@
 
         </view>
         <view class="flex">
+    			<view >
+    					
+    					
+    							<view>
+    									<switch color="#FFCC33"  @change="switch1Change" />   
+    								</view>
+    							
+    						使用优惠券<text >（可用优惠券{{userInfo.coupon}})</text> 
+    			</view>
           <view class="text-right margin-right-sm">
             <view class="">
-              合计：<text class="text-red" style="font-size: 14px;font-weight: 600;">￥205.90</text>
+              合计：<text class="text-red" style="font-size: 14px;font-weight: 600;">￥{{totalPrice-Cheap-coupon}}</text>
             </view>
             <view class="">
-              <text class="text-gray">已优惠：￥5</text>
+              <text class="text-gray">满减优惠：￥{{Cheap}}</text>
             </view>
           </view>
           <view @click="gotoGetMoney">
@@ -174,14 +183,13 @@
   export default {
     data() {
       return {
+        isChecked:false,
+         skuNum: "",
         radio: '',
-
+        _id:'',
         date: "请选择",
         time: "请选择",
-
         SendShopMethod: "peisong",
-
-
         latitude: 39.909,
         longitude: 116.39742,
         covers: [{
@@ -194,7 +202,20 @@
         }]
       }
     },
+    created() {
+         this.$store.dispatch("getCars",{usersId:this.$store.state.users.usersInfo._id});     
+       uni.getStorage({
+         key:"id",
+         success(res){
+          this._id = res.data
+          console.log(this._id)
+         }
+       })
+    },
     methods: {
+              switch1Change: function (e) {
+                this.isChecked = e.detail.value
+              },
       TimeChange(e) {
         this.time = e.detail.value
       },
@@ -213,16 +234,66 @@
         })
       },
       async gotoGetMoney() {
+           // uni.getStorage({
+           //   key:"id",
+           //   success(res){
+           //    this._id = res.data
+           //    console.log(this._id)
+           //   }
+           // })
         const result = await deleteAllCars({
-          usersId: "62b178b0e3f366b069b4a39a"
-        });
+          usersId: this.userInfo._id
+        });      
         console.log(result)
+        const data = {
+          money:this.userInfo.money*1-this.totalPrice-this.Cheap-this.coupon,
+          coupon:this.userInfo.coupon - 1,
+          _id:this.userInfo._id,
+        }
+        console.log(data)
+          this.$store.dispatch("recharge", data);
         uni.navigateTo({
           url: '../car/pay-result'
         })
       }
 
 
+    },
+    computed:{
+      coupon(){
+        if(this.isChecked){
+          return 10
+        }
+        return 0
+      },
+      userInfo(){
+        return this.$store.state.users.usersInfo;
+      },
+    //判断满减
+     Cheap() {
+          let num = 0;
+          this.usersCars.forEach((item) => {
+            if (item.isCheap) {
+              num = num + item.price * 1;
+            }
+          });
+          if (num > 200 || num == 200) {
+            return 10;
+          }
+    
+          return 0;
+     },
+    usersCars() {
+      return this.$store.state.cars.usersCars;
+    },
+     //总价
+        totalPrice() {
+          let a = 0;      
+          this.usersCars.forEach((element) => {
+            a = element.price * 1 + a;
+          });
+          return Math.floor(a * 100) / 100;
+        },
     }
   }
 </script>

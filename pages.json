@@ -75,6 +75,16 @@
             }
             
         }
+        
+        ,{
+            "path" : "pages/user/zhuce/zhuce",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

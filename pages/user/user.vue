@@ -8,34 +8,29 @@
 			<view class="user-header" style="width: 100%;">
 				<view class="flex align-center padding">
 					<view class="cu-avatar round xl" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);border:2px solid white"></view>
-					<view class="text-white padding-left-sm">1054948087</view>
+					<view class="text-white padding-left-sm">{{userInfo.phone}}</view>
 				</view>
 				<view class="grid col-3 text-center" style="width: 100%;padding: 0 30upx;">
 					<view class="text-white" @click="gotoCoupon">
 						<view class="">
-							2
+							优惠卷:{{userInfo.coupon}}
 						</view>
-						
-						<view class="">
-							优惠卷
-						</view>
+					
 					</view>
 					<view class="text-white">
 						<view class="">
-							<text class="padding-left-sm">100</text> <text class="cuIcon-question text-yellow"></text>
+							<text class="padding-left-sm"> 余额:￥{{userInfo.money}}</text> 
 						</view>
-						<view class="">
-							积分
-						</view>
+		
 					</view>
-					<view class="text-white" @click="gotoMyMoney">
+		<!-- 			<view class="text-white" @click="gotoMyMoney">
 						<view class="">
-							￥500
+							  余额:￥{{userInfo.money}}
 						</view>
 						<view class="">
 							余额
 						</view>
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
@@ -69,56 +64,7 @@
 					
 				</view>
 			</view>
-			
-			<!-- 充值有关 -->
-			<view class="user-border-radius bg-white" >
-				<view class="cu-item shadow">
-					<view class="solids-bottom">
-						<view class=" text-xl padding">
-							<text class="text-black text-bold">充值有礼</text>
-						</view>
-					</view>
-					
-					<view class="grid col-4 padding text-center">
-						<view class="">
-							<view class="">
-								<image class="chongzhi-image" src="../../static/user/1.png" mode=""></image>
-							</view>
-							<view class="" style="font-size: 16px;">
-								<text class="cuIcon-roundcheckfill text-orange"></text>
-							</view>
-						</view>
-						<view class="">
-							<view class="">
-								<image class="chongzhi-image" src="../../static/user/2.png" mode=""></image>
-							</view>
-							<view class="">
-								<text class="cuIcon-round text-orange"></text>
-							</view>
-						</view>
-						<view class="">
-							<view class="">
-								<image class="chongzhi-image" src="../../static/user/3.png" mode=""></image>
-							</view>
-							<view class="">
-								<text class="cuIcon-round text-orange"></text>
-							</view>
-						</view>
-						<view class="">
-							<view class="">
-								<image class="chongzhi-image" src="../../static/user/4.png" mode=""></image>
-							</view>
-							<view class="">
-								<text class="cuIcon-round text-orange"></text>
-							</view>
-						</view>
-					</view>
-					<view class="text-center" style="padding-bottom: 30upx;">
-						<image src="../../static/user/liji-chongzhi.png" mode="" style="width: 350upx;height: 100upx;"></image>
-					</view>
-				</view>
-			</view>
-			
+
 			
 			<!-- 联系客户 -->
 			<view class="user-border-radius" style="background-color: #fff8e7;padding: 30upx;">
@@ -172,7 +118,12 @@
 					url:'../user/my-coupon'
 				})
 			}
-		}
+		},
+    computed:{
+  userInfo(){
+    return this.$store.state.users.usersInfo;
+  }
+    }
 	}
 </script>
 

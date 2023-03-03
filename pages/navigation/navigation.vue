@@ -35,8 +35,8 @@
             登录
           </button>
           <button class='cu-btn bg-blue margin-tb-sm lg' open-type="getUserInfo" withCredentials="true" lang="zh_CN"
-            @click="loginModel=false">
-            暂不登录
+            @click="zhuce">
+            注册
           </button>
         </view>
       </view>
@@ -86,27 +86,26 @@
     onShow() {
       this.shareApp();
      console.log("触发onload")
-     if(this.$store.state.users.usersInfo.name){
+     if(this.$store.state.users.usersInfo._id){
            this.loginModel = false;}
     },
-    onReachBottom() {
-      this.searchInfo.pageNo++;
+    // onReachBottom() {
+    //   this.searchInfo.pageNo++;
 
-      this.$store.dispatch("searchGoods", this.searchInfo);
-      console.log('已触底');
-    },
+    //   this.$store.dispatch("searchGoods", this.searchInfo);
+    //   console.log('已触底');
+    // },
 
     methods: {
-      async loguser() {
+      zhuce(){
+        uni.navigateTo({
+          url:'../user/zhuce/zhuce'
+        })
+      },
+       loguser() {
         uni.navigateTo({
           url:'../user/login/login'
         })
-        // const data = {
-        //   phone: this.phone,
-        //   password: this.password
-        // }
-
-        // const result = await login(data);
         
       },
       shareApp() {

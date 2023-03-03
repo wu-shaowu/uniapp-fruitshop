@@ -4,15 +4,16 @@ const state ={
 };
 const actions ={
             //在进行查找出用户的购物车
-            async getCars({commit}){
-                const data ={usersId:"62b178b0e3f366b069b4a39a"};
+            async getCars({commit},data){
+				console.log(data)
                 const result = await getUsersCars(data);
-                console.log(result)
+				console.log(result)
                 commit('GETCARS',result.data.data)
             },
             async updataCars({commit},data){
                 const result = await updataCars(data);
-                commit('UPDATACARS',result.data.data)
+				console.log(result)
+                // commit('UPDATACARS',result.data.data)
             },
             async addCars({commit},data){
               const result = await addCars(data);
@@ -21,8 +22,10 @@ const actions ={
             
 };
 const mutations ={
-    GETCARS(context,value){
+    GETCARS(context,value){ 
+      console.log(state.usersCars)
         state.usersCars = value.filter(item=>item.isTrade==false);
+        console.log(state.usersCars)
         // state.usersCars = value;
     },
     UPDATACARS(context,value){

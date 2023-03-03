@@ -23,6 +23,6 @@ export const recharge = (data) =>api({url:'users/recharge',method:'POST',data});
 export const getAllTrade = (data) =>api({url:'trade/getAllTrade',method:'POST',data});
 export const searchGoods = (data) =>api({url:'goods/search',method:'POST',data});
 export const changeAddress = (data) =>api({url:'users/changeAddress',method:'POST',data});
-
+export const register = (data) =>api({url:'users/register',method:'POST',data});
 
 

@@ -15,13 +15,13 @@
 					<image src="../../static/car/order-information.png" mode="" style="width: 260upx;height: 70upx;"></image>
 				</view>
 				
-				<view class="text-grey" style="margin-top: 25upx;padding-bottom: 60upx;">
+				<view class="text-grey" style="margin-top: 25upx;padding-bottom: 60upx;" @click="goIndex">
 					返回首页
 				</view>
 			</view>
 		</view>
 		
-		<view class="margin-top bg-white">
+<!-- 		<view class="margin-top bg-white">
 			<view class="solid-bottom text-xl padding text-center">
 				<text class="text-black text-bold">猜你喜欢</text>
 			</view>
@@ -43,7 +43,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		
 		
 	</view>
@@ -57,7 +57,11 @@
 			}
 		},
 		methods: {
-			
+			goIndex(){
+        uni.navigateTo({
+          url: '../navigation/navigation',
+        })
+      }
 		}
 	}
 </script>
